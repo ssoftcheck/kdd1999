@@ -1,0 +1,12 @@
+#drop
+is_host_login
+num_outbound_cmds
+land
+
+#loo vars
+service
+flag
+
+#class vars
+logged_in
+protocol_type

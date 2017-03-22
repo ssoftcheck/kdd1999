@@ -3,3 +3,7 @@
 *.gz
 *pycache*
 .ipynb_checkpoints/*
+*pyc
+derby.log
+kddcup.data.corrected
+metastore_db/

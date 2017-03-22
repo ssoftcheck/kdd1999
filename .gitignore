@@ -1,0 +1,5 @@
+*.data
+*.names
+*.gz
+*pycache*
+.ipynb_checkpoints/*

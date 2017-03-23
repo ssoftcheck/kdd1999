@@ -28,7 +28,7 @@ class loo:
 		result = np.empty(n)
 		for i in range(n):
 			result[i] = jitter[i] * ((baseSum[i] - yvar[i] + self.popMean) / (weightSum[i] - 1 + meanWeight))
-		result[numpy.isnan(result)] = self.popMean
+		result[np.isnan(result)] = self.popMean
 		return result
 		
 	def applyCalcWeight(self,baseSum, yvar, jitter, weights, weightSum, meanWeight):
@@ -37,7 +37,7 @@ class loo:
 		result = np.empty(n)
 		for i in range(n):
 			result[i] = jitter[i] * ((baseSum[i] - yvar[i]*weights[i] + self.popMean) / (weightSum[i] - weights[i] + meanWeight))
-		result[numpy.isnan(result)] = self.popMean
+		result[np.isnan(result)] = self.popMean
 		return result
 		
 	def applyCalcTest(self,baseSum, weightSum):
@@ -46,7 +46,7 @@ class loo:
 		result = np.empty(n)
 		for i in range(n):
 			result[i] = baseSum[i] / weightSum[i]
-		result[numpy.isnan(result)] = self.popMean
+		result[np.isnan(result)] = self.popMean
 		return result
 	
 	

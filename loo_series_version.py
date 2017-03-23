@@ -34,7 +34,7 @@ class loo:
 				df['loo_'+i] = np.empty(len(df))
 				# training cases
 				df.loc[trainInd,'loo_'+i] = (self.lookup[i].loc[df.loc[trainInd,i],self.yvar] - df.loc[trainInd,self.yvar] + self.popMean) / (self.lookup[i].loc[df.loc[trainInd,i],'weight'] - 1 + meanWeight)
-				df.loc[trainInd and numpy.isnan(df[trainInd,'loo_'+i]),'loo_'+i] = self.popMean
+				df.loc[trainInd and np.isnan(df[trainInd,'loo_'+i]),'loo_'+i] = self.popMean
 				df.loc[trainInd,'loo_'+i] = df.loc[trainInd,'loo_'+i] * uniform(1-jitter,1+jitter,sum(trainInd))
 				# test cases
 				df.loc[testInd,'loo_'+i] = self.lookup[i].loc[df.loc[testInd,i],self.yvar] / self.lookup[i].loc[df.loc[testInd,i],'weight']
@@ -44,7 +44,7 @@ class loo:
 				df['loo_'+i] = np.empty(len(df))
 				# training cases
 				df.loc[trainInd,'loo_'+i] = (self.lookup[i].loc[df.loc[trainInd,i],self.yvar] - df.loc[trainInd,self.yvar]*df.loc[trainInd,self.wvar] + self.popMean) / (self.lookup[i].loc[df.loc[trainInd,i],'weight']- df.loc[trainInd,self.wvar] + meanWeight)
-				df.loc[trainInd and numpy.isnan(df[trainInd,'loo_'+i]),'loo_'+i] = self.popMean
+				df.loc[trainInd and np.isnan(df[trainInd,'loo_'+i]),'loo_'+i] = self.popMean
 				df.loc[trainInd,'loo_'+i] = df.loc[trainInd,'loo_'+i] * uniform(1-jitter,1+jitter,sum(trainInd))
 				# test cases)
 				df.loc[testInd,'loo_'+i] = self.lookup[i].loc[df.loc[testInd,i],self.yvar] / self.lookup[i].loc[df.loc[testInd,i],'weight']

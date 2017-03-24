@@ -13,7 +13,7 @@ class loo:
 			for i in self.vars:
 				self.lookup[i] = df[[yvar,i]].groupby(i).agg({yvar:{sum,len}})
 				self.lookup[i].columns = self.lookup[i].columns.droplevel()
-				self.lookup[i].columns = [yvar,'weight']
+				self.lookup[i].rename(columns={'sum':yvar,'len':'weight'},inplace=True)
 			self.popMean = df[yvar].mean()
 		else:
 			df = df[list(set(self.vars  + [wvar] + [yvar]))]
@@ -56,7 +56,7 @@ class loo:
 		testInd = [not i for i in trainInd]
 
 		if self.wvar is None:
-			df = df.loc[:,self.vars + [self.yvar]]
+			df = df.loc[:,self.vars + [self.yvar] + list(keep)]
 			for i in self.vars:
 				df['loo_'+i] = np.empty(len(df))
 				# training cases
@@ -64,7 +64,7 @@ class loo:
 				# test cases
 				df.loc[testInd,'loo_'+i] = self.applyCalcTest(self.lookup[i].loc[df.loc[testInd,i],self.yvar].values,self.lookup[i].loc[df.loc[testInd,i],'weight'].values)
 		else:
-			df = df.loc[:,self.vars + [self.yvar,self.wvar]]
+			df = df.loc[:,self.vars + [self.yvar,self.wvar] + list(keep)]
 			for i in self.vars:
 				df['loo_'+i] = np.empty(len(df))
 				# training cases

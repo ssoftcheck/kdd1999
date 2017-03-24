@@ -13,7 +13,7 @@ class loo:
 			for i in self.vars:
 				self.lookup[i] = df[[yvar,i]].groupby(i).agg({yvar:{sum,len}})
 				self.lookup[i].columns = self.lookup[i].columns.droplevel()
-				self.lookup[i].columns = [yvar,'weight']
+				self.lookup[i].rename(columns={'sum':yvar,'len':'weight'},inplace=True)
 			self.popMean = df[yvar].mean()
 		else:
 			df = df[list(set(self.vars  + [wvar] + [yvar]))]
@@ -33,11 +33,11 @@ class loo:
 	
 	def applyLookup(self,df,trainVar,trainValue,jitter=0.2,meanWeight=1,keep=set()):
 		if self.wvar is None:
-			df = df[self.vars + [self.yvar] + [trainVar]]
+			df = df[self.vars + [self.yvar,trainVar] + list(keep)]
 			for i in self.vars:
 				df['loo_'+i] = df.apply(lambda x: self.looVal(i,x[i],x[self.yvar],x[trainVar],set(trainValue),jitter,meanWeight),axis=1)
 		else:
-			df = df[self.vars + [self.yvar] + [self.wvar] [trainVar]]
+			df = df[self.vars + [self.yvar,self.wvar,trainVar] + list(keep)]
 			for i in self.vars:
 				df['loo_'+i] = df.apply(lambda x: self.looVal(i,x[i],x[self.yvar],x[trainVar],set(trainValue),jitter,meanWeight,x[self.wvar]),axis=1)
 		return df[ list(filter(lambda x: x[:4]=='loo_' or x in keep,df.columns)) ]

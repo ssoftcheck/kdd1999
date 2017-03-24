@@ -4,6 +4,6 @@
 *pycache*
 .ipynb_checkpoints/*
 *pyc
-derby.log
+*.log
 kddcup.data.corrected
 metastore_db/
